@@ -33,7 +33,7 @@ $app->get('/friends/all', function (Request $request, Response $response) {
 });
 
 //Get single
-$app->get('/friends/{id}', function (Request $request, Response $response, $args) {
+$getFriend = $app->get('/friends/{id}', function (Request $request, Response $response, $args) {
     $id = $args['id'];
     $sql = "SELECT * FROM friends WHERE id = $id";
     try {
@@ -93,24 +93,21 @@ $app->post('/friends/add', function (Request $request, Response $response) {
 
 // Update one 
 $app->put('/friends/{id}', function (Request $request, Response $response, array $args) {
-    $id = $args['id'];
+    $id = $args['id']; 
     $data = $request->getParsedBody();
     $email = $data['email'];
     $display_name = $data['display_name'];
     $phone = $data['phone'];
 
-    $sql = "UPDATE friends
-    SET
-      email = ?,
-      display_name = ?,
-      phone = ?
-    WHERE id = $id";
+    $sql = "UPDATE friends SET email=?, display_name=?, phone=? WHERE id = $id";
 
     try {
         $db = new DB();
         $conn = $db->connect();
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam('sss', $email, $display_name, $phone);
+        $stmt->bindParam(1, $email, PDO::PARAM_STR);
+        $stmt->bindParam(2, $display_name, PDO::PARAM_STR);
+        $stmt->bindParam(3, $phone, PDO::PARAM_STR);
         $result = $stmt->execute();
 
         $db = null;
