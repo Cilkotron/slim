@@ -5,15 +5,15 @@ use DI\ContainerBuilder;
 use App\Controller\FriendController;
 
 
-
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/FriendController.php';
+require_once __DIR__ . '/../tests/FriendsControllerTest.php';
 
 // Create Container
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions(__DIR__ . '/../config/definitions.php');
-$container = $containerBuilder->build(); 
+$container = $containerBuilder->build();
 
 // Instantiate App
 AppFactory::setContainer($container);
@@ -23,7 +23,6 @@ $app =  AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
-
 
 
 // Register routes
