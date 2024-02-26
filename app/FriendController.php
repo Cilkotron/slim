@@ -10,11 +10,10 @@ use Psr\Container\ContainerInterface;
 
 class FriendController
 {
-    private $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
-        $this->container = $container;
+        //$this->container = $container;
     }
 
     public function getAllFriends(Request $request, Response $response, array $args)

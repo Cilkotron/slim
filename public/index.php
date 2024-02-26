@@ -7,8 +7,8 @@ use App\Controller\FriendController;
 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../src/FriendController.php';
-require_once __DIR__ . '/../tests/FriendsControllerTest.php';
+require_once __DIR__ . '/../app/FriendController.php';
+require_once __DIR__ . '/../tests/FriendControllerTest.php';
 
 // Create Container
 $containerBuilder = new ContainerBuilder();
@@ -22,7 +22,7 @@ $app =  AppFactory::create();
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
-$app->addErrorMiddleware(true, true, true);
+$app->addErrorMiddleware(true, true, false);
 
 
 // Register routes
