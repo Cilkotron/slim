@@ -1,56 +1,123 @@
 <?php
 
-use App\Controller\FriendController;
-use Psr\Container\ContainerInterface;
-use Slim\Psr7\Factory\ServerRequestFactory;
-use Slim\Psr7\Factory\ResponseFactory;
-use DI\ContainerBuilder;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\App;
-use Slim\Factory\AppFactory;
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Headers;
-use Slim\Psr7\Request as SlimRequest;
-use Slim\Psr7\Uri;
-
-require_once __DIR__ . '/../src/FriendController.php';
+require_once __DIR__ . '/../app/FriendController.php';
 
 
 
 class FriendControllerTest extends \PHPUnit\Framework\TestCase
 {
-    protected $controller;
-    protected $container;
+    private $http;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
-        $this->setUpController();
+        $this->http = new GuzzleHttp\Client(['base_uri' => 'http://localhost:8888']);
     }
 
-    protected function setUpController() : void
+    public function tearDown(): void
     {
-        $container = (new ContainerBuilder())
-            ->addDefinitions(__DIR__ . '/../config/definitions.php')
-            ->build();
-        $this->setUpContainer($container);
-        $this->controller = $container->get(FriendController::class);
-
-    }
-    protected function setUpContainer(ContainerInterface $container = null): void
-    {
-        if ($container instanceof ContainerInterface) {
-            $this->container = $container;
-            return;
-        }
-        throw new UnexpectedValueException('Container must be initialized');
+        $this->http = null;
     }
 
-    public function testGetAllFriends()
+
+    /**
+     * @test
+     */
+    public function getAllFriends() : void 
     {
-        $request = (new ServerRequestFactory())->createServerRequest('GET', '/friends');
-        $response = (new ResponseFactory())->createResponse();
-        $response = $this->controller->getAllFriends($request, $response, []);
-        $this->assertSame(200, $response->getStatusCode());
+        // Test response status 
+        $response = $this->http->request('GET', 'friends');
+        $this->assertEquals(200, $response->getStatusCode());
+
+        //Test response content-type
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
     }
 
+    /**
+     * @test 
+     */
+    public function getFriend() : void 
+    {
+        //Test response status 
+        $response = $this->http->request('GET', 'friends/2');
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // Test response content-type 
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+    }
+
+    /**
+     * @test
+     */
+    public function createFriend() : void
+    {
+        //Test response status 
+        $body = [
+            'email' => 'sanjabudic@gmail.com',
+            'display_name' => 'Sanja Budic',
+            'phone' => ''
+        ];
+
+        $response = $this->http->request(
+            'POST',
+            'friends',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept'       => 'application/json'
+                ],
+                'json' => $body
+            ]
+        );
+        $this->assertEquals(201, $response->getStatusCode());
+
+        // Test response content-type 
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+    }
+
+    /**
+     * @test
+     */
+    public function updateFriend() : void
+    {
+        //Test response status 
+        $toUpdate = [
+            'email' => 'sanjabudic@gmail.com',
+            'display_name' => 'Example',
+            'phone' => '0123456789'
+        ];
+        $response = $this->http->request(
+            'PUT',
+            'friends/2',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept'       => 'application/json'
+                ],
+                'json' => $toUpdate
+            ]
+        );
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // Test response content-type 
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+    }
+
+    /**
+     * @test
+     * @group delete 
+     */
+    public function deteleFriend() : void 
+    {
+        //Test response status 
+        $response = $this->http->request('DELETE', 'friends/5');
+        $this->assertEquals(200, $response->getStatusCode());
+
+        // Test response content-type 
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+    }
 }

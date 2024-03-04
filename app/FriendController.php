@@ -13,7 +13,7 @@ class FriendController
 
     public function __construct(protected ContainerInterface $container)
     {
-        //$this->container = $container;
+
     }
 
     public function getAllFriends(Request $request, Response $response, array $args)
@@ -91,7 +91,7 @@ class FriendController
             $response->getBody()->write(json_encode($result));
             return $response
                 ->withHeader('content-type', 'application/json')
-                ->withStatus(200);
+                ->withStatus(201);
         } catch (\PDOException $e) {
             $error = array(
                 "message" => $e->getMessage()
@@ -163,6 +163,7 @@ class FriendController
                 ->withStatus(500);
         }
     }
+
    
    
    

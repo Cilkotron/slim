@@ -30,7 +30,7 @@ $app->get('/friends', FriendController::class  . ':getAllFriends');
 $app->get('/friends/{id}', FriendController::class . ':getFriend');
 $app->post('/friends', FriendController::class . ':createFriend');
 $app->put('/friends/{id}', FriendController::class . ':updateFriend');
-$app->delete('/friends/{id}', FriendController::class . 'deleteFriend');
+$app->delete('/friends/{id}', FriendController::class . ':deleteFriend');
 
 
 $app->run();
