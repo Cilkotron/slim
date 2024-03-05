@@ -10,6 +10,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
 
     public function setUp(): void
     {
+        // Create Guzzle Client 
         $this->http = new GuzzleHttp\Client(['base_uri' => 'http://localhost:8888']);
     }
 
