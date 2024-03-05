@@ -1,4 +1,6 @@
 {
+    "name": "Slim API",
+    "description": "Simple Slim API",
     "require": {
         "slim/slim": "~4.0",
         "php-di/php-di": "^7.0",
