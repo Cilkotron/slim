@@ -33,13 +33,12 @@ jobs:
       run: composer install --prefer-dist --no-progress
  
     - name: Build & Push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v6
+      uses: mr-smithers-excellent/docker-build-push@v4
       with:
-        image: sanjab/slimapi
-        registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        context: .
+        image: sanjab/slimapi
+        registry: docker.io
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
