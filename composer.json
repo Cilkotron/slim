@@ -1,6 +1,6 @@
 {
-        "name": "slim/slim",
-        "description": "Simpale Slim API",
+        "name": "slim/slimapi",
+        "description": "Simple Slim API",
         "license": "MIT",
         "authors": [
             {
