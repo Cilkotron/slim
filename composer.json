@@ -1,5 +1,5 @@
 {
-    "name": "Slim API",
+    "name": "slim/slimapi",
     "description": "Simple Slim API",
     "require": {
         "slim/slim": "~4.0",
