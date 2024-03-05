@@ -1,6 +1,14 @@
 {
-    "name": "slim/slimapi",
-    "description": "Simple Slim API",
+        "name": "slim/slim",
+        "description": "Simpale Slim API",
+        "license": "MIT",
+        "authors": [
+            {
+                "name": "Sanja Budic",
+                "email": "psiho747@gmail.com",
+                "homepage": "http://example.com"
+            }
+        ],
     "require": {
         "slim/slim": "~4.0",
         "php-di/php-di": "^7.0",
