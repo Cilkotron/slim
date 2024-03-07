@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class FriendControllerTest extends \PHPUnit\Framework\TestCase
 {
     private $http;
@@ -58,7 +55,6 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
             'display_name' => 'Sanja Budic',
             'phone' => ''
         ];
-
         $response = $this->http->request(
             'POST',
             'friends',
@@ -71,6 +67,9 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
             ]
         );
         $this->assertEquals(201, $response->getStatusCode());
+
+        // Test if body is json object 
+        $this->assertJson(json_encode($body), $response->getBody());
 
         // Test response content-type 
         $contentType = $response->getHeaders()["Content-Type"][0];
@@ -100,6 +99,9 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
             ]
         );
         $this->assertEquals(200, $response->getStatusCode());
+
+        //Test if toUpdate body is json object
+        $this->assertJson(json_encode($toUpdate), $response->getBody());
 
         // Test response content-type 
         $contentType = $response->getHeaders()["Content-Type"][0];
