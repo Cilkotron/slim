@@ -21,6 +21,7 @@ class FriendController
         // Get all 
         $sql = "SELECT * FROM friends";
         try {
+          
             if ($this->container->has('db')) {
                 $db = $this->container->get('db');
             }

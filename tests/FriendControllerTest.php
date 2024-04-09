@@ -22,7 +22,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
     public function getAllFriends() : void 
     {
         // Test response status 
-        $response = $this->http->request('GET', 'friends');
+        $response = $this->http->request('GET', 'slim/friends');
         $this->assertEquals(200, $response->getStatusCode());
 
         //Test response content-type
@@ -36,7 +36,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
     public function getFriend() : void 
     {
         //Test response status 
-        $response = $this->http->request('GET', 'friends/2');
+        $response = $this->http->request('GET', 'slim/friends/2');
         $this->assertEquals(200, $response->getStatusCode());
 
         // Test response content-type 
@@ -57,7 +57,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
         ];
         $response = $this->http->request(
             'POST',
-            'friends',
+            'slim/friends',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -89,7 +89,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
         ];
         $response = $this->http->request(
             'PUT',
-            'friends/2',
+            'slim/friends/2',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -115,7 +115,7 @@ class FriendControllerTest extends \PHPUnit\Framework\TestCase
     public function deteleFriend() : void 
     {
         //Test response status 
-        $response = $this->http->request('DELETE', 'friends/5');
+        $response = $this->http->request('DELETE', 'slim/friends/5');
         $this->assertEquals(200, $response->getStatusCode());
 
         // Test response content-type 

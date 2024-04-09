@@ -18,11 +18,12 @@ $container = $containerBuilder->build();
 // Instantiate App
 AppFactory::setContainer($container);
 $app =  AppFactory::create();
+$app->setBasePath('/slim');
 
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
-$app->addErrorMiddleware(true, true, false);
+$app->addErrorMiddleware(true, true, true);
 
 
 // Register routes
